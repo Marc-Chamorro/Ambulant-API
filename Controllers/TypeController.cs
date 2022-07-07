@@ -9,9 +9,12 @@ using System.Web.Http;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class TypeController : ApiController
     {
         // GET api/<controller>
+        //[OverrideAuthentication]
+        [HttpGet]
         public List<Models.Type> Get()
         {
             return TypeData.List();

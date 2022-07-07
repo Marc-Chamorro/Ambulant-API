@@ -1,4 +1,5 @@
-﻿using System;
+﻿using API.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -19,6 +20,8 @@ namespace API
             config.MapHttpAttributeRoutes();
 
             config.Filters.Add(new AuthorizeAttribute());
+
+            config.MessageHandlers.Add(new TokenValidationHandler());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
