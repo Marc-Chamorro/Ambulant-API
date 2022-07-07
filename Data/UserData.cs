@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Security;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -46,14 +47,53 @@ namespace API.Data
 
         public static bool SignUp(PersonSignUp person)
         {
+            //check that the user does not exist
+            using (SqlConnection uConnection = new SqlConnection(Connect.pathConnection))
+            {
+                SqlCommand cmd = new SqlCommand("User_Check_Exists", uConnection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@name", person.Name);
+                cmd.Parameters.AddWithValue("@email", person.Email);
+
+                try
+                {
+                    uConnection.Open();
+                    cmd.ExecuteNonQuery();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            return false;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+
+            //create the user
             using (SqlConnection uConnection = new SqlConnection(Connect.pathConnection))
             {
                 SqlCommand cmd = new SqlCommand("User_Creation", uConnection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@name", person.Name);
                 cmd.Parameters.AddWithValue("@email", person.Email);
-                cmd.Parameters.AddWithValue("@password", person.Password);
-                cmd.Parameters.AddWithValue("@hash", person.Hash);
+                try
+                {
+                    string hash = Encryption.GenerateSalt();
+                    cmd.Parameters.AddWithValue("@hash", hash);
+
+                    string password = Encryption.ComputeHash(person.Password, hash);
+                    cmd.Parameters.AddWithValue("@password", password);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
 
                 try
                 {
