@@ -1,12 +1,10 @@
 ﻿using API.Models;
+using API.Security;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Web;
 
 namespace API.Data
 {
@@ -44,26 +42,12 @@ namespace API.Data
                 }
             }
 
-            string encrypterPsswd = ComputeHash(loginRequest.Password, mPerson.Hash);
+            string encrypterPsswd = Encryption.ComputeHash(loginRequest.Password, mPerson.Hash);
             if (encrypterPsswd.Equals(mPerson.Password))
             {
                 return true;
             }
             return false;
         }
-
-        private static string ComputeHash(string password, string hash)
-        {
-            int hashByteSize = Int32.Parse(ConfigurationManager.AppSettings["CRPT_HASH_SIZE"]);
-            int iterations = Int32.Parse(ConfigurationManager.AppSettings["CRPT_HASH_ITERATIONS"]);
-            byte[] salt = Convert.FromBase64String(hash);
-
-            Rfc2898DeriveBytes hashGenerator = new Rfc2898DeriveBytes(password, salt);
-
-            hashGenerator.IterationCount = iterations;
-
-            return Convert.ToBase64String(hashGenerator.GetBytes(hashByteSize));
-        }
-
     }
 }
