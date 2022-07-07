@@ -12,13 +12,13 @@ using System.Web.Http;
 namespace API.Controllers
 {
     [Authorize]
-    //[AllowAnonymous]
     [RoutePrefix("api/login")]
     public class LoginController : ApiController
     {
         [HttpGet]
         [AllowAnonymous]
         [Route("echoping")]
+        //check connection
         public IHttpActionResult EchoPing()
         {
             return Ok(true);
@@ -27,6 +27,7 @@ namespace API.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("echouser")]
+        //check user
         public IHttpActionResult EchoUser()
         {
             var identity = Thread.CurrentPrincipal.Identity;
@@ -36,6 +37,7 @@ namespace API.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("authenticate")]
+        //get the api token
         public IHttpActionResult Authenticate(LoginRequest login)
         {
             if (login == null)

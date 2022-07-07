@@ -118,10 +118,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\Connect.cs" />
     <Compile Include="Data\LoginData.cs.cs" />
     <Compile Include="Data\TypeData.cs" />
+    <Compile Include="Data\UserData.cs" />
     <Compile Include="Data\UsersData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
