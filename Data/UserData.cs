@@ -5,13 +5,15 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 
 namespace API.Data
 {
     public class UserData
     {
-        public static List<PersonReduced> List()
+        public static HttpResponseMessage List(HttpRequestMessage request)
         {
             List<PersonReduced> uListUser = new List<PersonReduced>();
             using (SqlConnection uConnection = new SqlConnection(Connect.pathConnection))
@@ -36,17 +38,29 @@ namespace API.Data
                             });
                         }
                     }
-                    return uListUser;
+                    return request.CreateResponse(HttpStatusCode.OK, uListUser);
                 }
                 catch (Exception ex)
                 {
-                    return uListUser;
+                    return request.CreateResponse(HttpStatusCode.InternalServerError, uListUser);
                 }
             }
         }
 
-        public static bool SignUp(PersonSignUp person)
+        public static HttpResponseMessage SignUp(HttpRequestMessage request, PersonSignUp person)
         {
+            //check for the created user size
+            if (person.Name.Length < 3)
+            {
+                return request.CreateResponse((HttpStatusCode)701, "Short name");
+            } else if (person.Email.Length < 2)
+            {
+                return request.CreateResponse((HttpStatusCode)701, "Short email");
+            } else if (person.Password.Length < 5)
+            {
+                return request.CreateResponse((HttpStatusCode)701, "Short password");
+            }
+
             //check that the user does not exist
             using (SqlConnection uConnection = new SqlConnection(Connect.pathConnection))
             {
@@ -65,13 +79,15 @@ namespace API.Data
                     {
                         if (dr.Read())
                         {
-                            return false;
+                            //409
+                            return request.CreateResponse(HttpStatusCode.Conflict, "User already exists");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    return false;
+                    //500
+                    return request.CreateResponse(HttpStatusCode.InternalServerError, "Error with the database");
                 }
             }
 
@@ -92,18 +108,20 @@ namespace API.Data
                 }
                 catch (Exception ex)
                 {
-                    return false;
+                    //500
+                    return request.CreateResponse(HttpStatusCode.InternalServerError, "Error while encrypting");
                 }
 
                 try
                 {
                     uConnection.Open();
                     cmd.ExecuteNonQuery();
-                    return true;
+                    return request.CreateResponse(HttpStatusCode.OK, "User created");
                 }
                 catch (Exception ex)
                 {
-                    return false;
+                    //500
+                    return request.CreateResponse(HttpStatusCode.InternalServerError, "Error with the database");
                 }
             }
         }
