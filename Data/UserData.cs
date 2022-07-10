@@ -1,4 +1,5 @@
-﻿using API.Models;
+﻿using API.Common_Functions;
+using API.Models;
 using API.Security;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,20 @@ namespace API.Data
             } else if (person.Password.Length < 5)
             {
                 return request.CreateResponse((HttpStatusCode)701, "Short password");
+            }
+
+            //check string characters from the asci table 32 to the 126 both included
+            TextValidation textValidation = new TextValidation();
+            if (!textValidation.CheckAsciiCharacters(person.Name))
+            {
+                return request.CreateResponse((HttpStatusCode)702, "Invalid name characters");
+            } else if (!textValidation.CheckAsciiCharacters(person.Email))
+            {
+                return request.CreateResponse((HttpStatusCode)702, "Invalid email characters");
+            }
+            if (!textValidation.CheckAsciiCharacters(person.Password))
+            {
+                return request.CreateResponse((HttpStatusCode)702, "Invalid password characters");
             }
 
             //check that the user does not exist

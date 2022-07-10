@@ -6,3 +6,4 @@
  - User data send
 700 - invalid value
 701 - value to short
+702 - invalid characters
