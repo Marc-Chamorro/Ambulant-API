@@ -16,17 +16,17 @@ namespace API.Controllers
         [HttpGet]
         [Route("list")]
         //list all available users id, name and email
-        public List<PersonReduced> Get()
+        public HttpResponseMessage Get()
         {
-            return UserData.List();
+            return UserData.List(this.Request);
         }
 
         [HttpPost]
         [Route("add")]
         [AllowAnonymous]
-        public bool Post([FromBody] PersonSignUp person)
+        public HttpResponseMessage Post([FromBody] PersonSignUp person)
         {
-            return UserData.SignUp(person);
+            return UserData.SignUp(this.Request, person);
         }
     }
 }

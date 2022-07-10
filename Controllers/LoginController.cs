@@ -25,7 +25,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("echouser")]
         //check user
         public IHttpActionResult EchoUser()

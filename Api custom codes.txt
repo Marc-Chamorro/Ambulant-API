@@ -1,0 +1,9 @@
+ - Connection problems with the API
+600 - no internet connection
+601 - could not find the endpoint
+602 - wrong format
+
+ - User data send
+700 - invalid value
+701 - value to short
+702 - invalid characters
