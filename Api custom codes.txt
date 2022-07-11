@@ -1,6 +1,6 @@
  - Connection problems with the API
 600 - no internet connection
-601 - could not find the endpoint
+601 - could not find the server
 602 - wrong format
 
  - User data send

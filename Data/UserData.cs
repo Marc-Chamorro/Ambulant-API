@@ -51,15 +51,15 @@ namespace API.Data
         public static HttpResponseMessage SignUp(HttpRequestMessage request, PersonSignUp person)
         {
             //check for the created user size
-            if (person.Name.Length < 3)
+            if (person.Name.Length < 3 || person.Name.Length > 255)
             {
-                return request.CreateResponse((HttpStatusCode)701, "Short name");
-            } else if (person.Email.Length < 2)
+                return request.CreateResponse((HttpStatusCode)701, "Invalid name length");
+            } else if (person.Email.Length < 2 || person.Email.Length > 255)
             {
-                return request.CreateResponse((HttpStatusCode)701, "Short email");
-            } else if (person.Password.Length < 5)
+                return request.CreateResponse((HttpStatusCode)701, "Invalid email length");
+            } else if (person.Password.Length < 5 || person.Password.Length > 255)
             {
-                return request.CreateResponse((HttpStatusCode)701, "Short password");
+                return request.CreateResponse((HttpStatusCode)701, "Invalid password length");
             }
 
             //check string characters from the asci table 32 to the 126 both included
@@ -94,7 +94,9 @@ namespace API.Data
                     {
                         if (dr.Read())
                         {
-                            //409
+                            if (person.Email.Equals(dr.GetString(0)))
+                                return request.CreateResponse(HttpStatusCode.Conflict, "Email already used");
+                            
                             return request.CreateResponse(HttpStatusCode.Conflict, "User already exists");
                         }
                     }
