@@ -136,7 +136,6 @@ D:\Documents\Ambulant\API\API\bin\System.Net.Http.Formatting.xml
 D:\Documents\Ambulant\API\API\bin\System.Web.Http.xml
 D:\Documents\Ambulant\API\API\bin\System.Web.Http.WebHost.xml
 D:\Documents\Ambulant\API\API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Documents\Ambulant\API\API\obj\Release\API.csprojAssemblyReference.cache
 D:\Documents\Ambulant\API\API\obj\Release\API.csproj.CoreCompileInputs.cache
 D:\Documents\Ambulant\API\API\obj\Release\API.csproj.CopyComplete
 D:\Documents\Ambulant\API\API\obj\Release\API.dll
@@ -151,3 +150,4 @@ D:\Documents\Ambulant\API\API\bin\Microsoft.IdentityModel.JsonWebTokens.xml
 D:\Documents\Ambulant\API\API\bin\Microsoft.IdentityModel.Logging.xml
 D:\Documents\Ambulant\API\API\bin\Microsoft.IdentityModel.Tokens.xml
 D:\Documents\Ambulant\API\API\bin\System.IdentityModel.Tokens.Jwt.xml
+D:\Documents\Ambulant\API\API\obj\Release\API.csproj.AssemblyReference.cache
