@@ -11,8 +11,8 @@ namespace API.Data
         //public static string pathConnection = "Data Source=DESKTOP-1NA7VLL\\SQLEXPRESS;Initial Catalog=Ambulant;Persist Security Info=True;User ID=sa;Password=12345aA";
         
         //connection string through the IP
-        //public static string pathConnection = "Data Source=192.168.1.42;Initial Catalog=Ambulant;Persist Security Info=True;User ID=sa;Password=12345aA";
+        public static string pathConnection = "Data Source=192.168.1.42;Initial Catalog=Ambulant;Persist Security Info=True;User ID=sa;Password=12345aA";
         //connection string directly through the computer name
-        public static string pathConnection = "Data Source=DESKTOP-1NA7VLL;Initial Catalog=Ambulant;Persist Security Info=True;User ID=sa;Password=12345aA";
+        //public static string pathConnection = "Data Source=DESKTOP-1NA7VLL;Initial Catalog=Ambulant;Persist Security Info=True;User ID=sa;Password=12345aA";
     }
 }
